@@ -1,0 +1,3 @@
+rootProject.name='JinXinMvp'
+include ':app'
+include ':baselibrary'
