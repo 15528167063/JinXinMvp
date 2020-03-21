@@ -8,6 +8,7 @@ import com.congda.jianxin.mvp.model.api.Api;
 import com.congda.jianxin.mvp.model.entity.CommonBean;
 import com.congda.jianxin.mvp.model.entity.IMHttpResult;
 import com.congda.jianxin.mvp.model.entity.IMImageViewBean;
+import com.congda.jianxin.mvp.model.entity.IMUpdataFileBean;
 import com.congda.jianxin.mvp.model.entity.VersonBeanData;
 import com.google.gson.Gson;
 import com.jess.arms.integration.IRepositoryManager;
@@ -71,7 +72,7 @@ public class HomeModel extends BaseModel implements HomeContract.Model {
     }
 
     @Override
-    public Observable<Object> getUpdataPictureFile( List<MultipartBody.Part> parts) {
+    public Observable<IMUpdataFileBean> getUpdataPictureFile(List<MultipartBody.Part> parts) {
         return mRepositoryManager.obtainRetrofitService(Api.class).getUpdataPictureFile(parts);
     }
 }

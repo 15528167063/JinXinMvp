@@ -68,7 +68,7 @@ public interface Api {
 
     @Multipart
     @POST("api/v1/message/uploadFile")
-    Observable<Object> getUpdataPictureFile(
+    Observable<IMUpdataFileBean> getUpdataPictureFile(
             @Part List<MultipartBody.Part> partList
     );
 }

@@ -2,6 +2,7 @@ package com.congda.jianxin.mvp.contract.fragment;
 
 import com.congda.jianxin.mvp.model.entity.IMHttpResult;
 import com.congda.jianxin.mvp.model.entity.IMImageViewBean;
+import com.congda.jianxin.mvp.model.entity.IMUpdataFileBean;
 import com.congda.jianxin.mvp.model.entity.VersonBeanData;
 import com.jess.arms.mvp.IView;
 import com.jess.arms.mvp.IModel;
@@ -29,6 +30,7 @@ public interface HomeContract {
     //对于经常使用的关于UI的方法可以定义到IView中,如显示隐藏进度条,和显示文字消息
     interface View extends IView {
         void setChooseData(String url);
+        void setChooseFileData(String url);
     }
 
     //Model层定义接口,外部只需关心Model返回的数据,无需关心内部细节,即是否使用缓存
@@ -36,6 +38,6 @@ public interface HomeContract {
 
         Observable<IMHttpResult<IMImageViewBean>> getUpdataPicture(String s);
 
-        Observable<Object> getUpdataPictureFile(List<MultipartBody.Part> path);
+        Observable<IMUpdataFileBean> getUpdataPictureFile(List<MultipartBody.Part> path);
     }
 }

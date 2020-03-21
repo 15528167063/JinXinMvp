@@ -8,6 +8,7 @@ import com.congda.baselibrary.imutils.IMPreferenceUtil;
 import com.congda.jianxin.application.Constanst;
 import com.congda.jianxin.mvp.model.entity.IMHttpResult;
 import com.congda.jianxin.mvp.model.entity.IMImageViewBean;
+import com.congda.jianxin.mvp.model.entity.IMUpdataFileBean;
 import com.congda.jianxin.mvp.model.entity.VersonBeanData;
 import com.google.gson.Gson;
 import com.jess.arms.integration.AppManager;
@@ -116,12 +117,12 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
                             mRootView.hideLoading()
                     )
                     .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
-                    .subscribe(new ErrorHandleSubscriber<Object>(mErrorHandler) {
-                        public void onNext(Object bean) {
+                    .subscribe(new ErrorHandleSubscriber<IMUpdataFileBean>(mErrorHandler) {
+                        public void onNext(IMUpdataFileBean bean) {
                             if(bean==null){
                                 return;
                             }
-                            Log.e("----文件上传-",bean.toString());
+                            mRootView.setChooseFileData(bean.data.getFilePath());
                         }
                     });
         }

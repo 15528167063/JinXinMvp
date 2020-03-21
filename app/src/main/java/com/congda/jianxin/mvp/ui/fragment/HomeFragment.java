@@ -85,4 +85,7 @@ public class HomeFragment extends IMBaseFragment<HomePresenter> implements HomeC
     public void setChooseData(String url) {
         IMImageLoadUtil.CommonImageRoundLoad(getActivity(),url,imageView1);
     }
+    public void setChooseFileData(String url) {
+        IMImageLoadUtil.CommonImageRoundLoad(getActivity(),url,imageView2);
+    }
 }
