@@ -7,6 +7,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.util.Log;
 
+import com.congda.jianxin.app.utils.RxUtils;
 import com.congda.jianxin.mvp.contract.SplashContract;
 import com.congda.jianxin.mvp.model.entity.IMHttpResult;
 import com.congda.jianxin.mvp.model.entity.SplashAdBean;
@@ -77,14 +78,7 @@ public class SplashPresenter extends BasePresenter<SplashContract.Model, SplashC
         // 获取自己的版本信息
         getMyVersion(context);
         mModel.getVersonData("1")
-                .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 0))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
-                .doOnSubscribe(disposable -> {
-                    mRootView.hideLoading();
-                })
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                .compose(RxUtils.applySchedulers(mRootView))
                 .subscribe(new ErrorHandleSubscriber<IMHttpResult<VersonBeanData>>(mErrorHandler) {
                     public void onNext(IMHttpResult<VersonBeanData> versonBeanData) {
                         getSplashData();
@@ -95,13 +89,7 @@ public class SplashPresenter extends BasePresenter<SplashContract.Model, SplashC
     private void getSplashData() {
         mModel.getGetAdJson()
                 .subscribeOn(Schedulers.io())
-                .retryWhen(new RetryWithDelay(1, 0))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doFinally(()->{
-                    mRootView.hideLoading();
-                })
-                .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                .compose(RxUtils.applySchedulers(mRootView))
                 .subscribe(new ErrorHandleSubscriber<IMHttpResult<List<SplashAdBean>>>(mErrorHandler) {
                     public void onNext(IMHttpResult<List<SplashAdBean>> s) {
                         if(s.data==null || s.data.size()==0){

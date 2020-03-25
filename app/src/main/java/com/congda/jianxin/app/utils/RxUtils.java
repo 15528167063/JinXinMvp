@@ -11,6 +11,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
+import me.jessyan.rxerrorhandler.handler.RetryWithDelay;
 
 /**
  * ================================================
@@ -31,6 +32,7 @@ public class RxUtils {
             @Override
             public Observable<T> apply(Observable<T> observable) {
                 return observable.subscribeOn(Schedulers.io())
+                        .retryWhen(new RetryWithDelay(1, 0))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
                         .doOnSubscribe(new Consumer<Disposable>() {
                             @Override
                             public void accept(@NonNull Disposable disposable) throws Exception {

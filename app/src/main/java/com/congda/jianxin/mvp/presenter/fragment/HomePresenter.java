@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.congda.baselibrary.imutils.IMPreferenceUtil;
+import com.congda.jianxin.app.utils.RxUtils;
 import com.congda.jianxin.application.Constanst;
 import com.congda.jianxin.mvp.model.entity.IMHttpResult;
 import com.congda.jianxin.mvp.model.entity.IMImageViewBean;
@@ -106,17 +107,7 @@ public class HomePresenter extends BasePresenter<HomeContract.Model, HomeContrac
         for (int i = 0; i < mSelected.size(); i++) {
             List<MultipartBody.Part> parts=getParts(mSelected.get(i));
             mModel.getUpdataPictureFile(parts)
-                    .subscribeOn(Schedulers.io())
-                    .retryWhen(new RetryWithDelay(1, 0))//遇到错误时重试,第一个参数为重试几次,第二个参数为重试的间隔
-                    .doOnSubscribe(disposable -> {
-                        mRootView.showLoading();
-                    })
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .doFinally(()->
-                            mRootView.hideLoading()
-                    )
-                    .compose(RxLifecycleUtils.bindToLifecycle(mRootView))//使用 Rxlifecycle,使 Disposable 和 Activity 一起销毁
+                    .compose(RxUtils.applySchedulers(mRootView))
                     .subscribe(new ErrorHandleSubscriber<IMUpdataFileBean>(mErrorHandler) {
                         public void onNext(IMUpdataFileBean bean) {
                             if(bean==null){
