@@ -58,24 +58,31 @@ public class ShowLoadiongUtils {
      * 显示加载界面loading(第1种自定义)
      */
     public static void showLoadingDialogTypeOne(Context context) {
+        if (loadingDialog!=null && loadingDialog.isshow()) {
+            loadingDialog.dismiss();
+            loadingDialog=null;
+        }
         loadingDialog = new DialogMessageTypeOne(context);
         loadingDialog.set_progress(context.getResources().getString(R.string.im_loading_text));
         loadingDialog.show();
     }
 
     public static void dismissLoadingDialogTypeOne() {
-        if (loadingDialog != null) {
+        if (loadingDialog != null && loadingDialog.isshow()) {
             loadingDialog.dismiss();
+            loadingDialog=null;
         }
     }
     /**
      * 显示加载界面loading(第2种自定义)
      */
     public static void showLoadingDialogTypeTwo(Context context,String msg) {
-        if (dialogMessage == null) {
-            dialogMessage = new DialogMessageTypeTwo(context);
-            dialogMessage.setType(1);
+        if (dialogMessage != null) {
+            dialogMessage.dissmissDialog();
+            dialogMessage = null;
         }
+        dialogMessage = new DialogMessageTypeTwo(context);
+        dialogMessage.setType(1);
         if(!TextUtils.isEmpty(msg)){
             dialogMessage.setMessage(msg);
         }

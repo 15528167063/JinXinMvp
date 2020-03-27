@@ -29,6 +29,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.congda.baselibrary.loading.ShowLoadiongUtils;
+import com.congda.jianxin.R;
 import com.jess.arms.base.delegate.IActivity;
 import com.jess.arms.base.delegate.IFragment;
 import com.jess.arms.integration.cache.Cache;
@@ -115,11 +116,11 @@ public abstract class IMBaseFragment<P extends IPresenter> extends Fragment impl
 
     @Override
     public void showLoading() {
-        ShowLoadiongUtils.showLoadingDialogTypeOne(getActivity());
+        ShowLoadiongUtils.showLoadingDialogTypeTwo(getActivity(),getResources().getString(R.string.im_loading));
     }
     @Override
     public void hideLoading() {
-        ShowLoadiongUtils.dismissLoadingDialogTypeOne();
+        ShowLoadiongUtils.dismissLoadingDialogTypeTwo();
     }
     @Override
     public void showMessage(@NonNull String message) {

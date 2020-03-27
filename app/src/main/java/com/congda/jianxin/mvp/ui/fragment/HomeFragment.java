@@ -83,6 +83,13 @@ public class HomeFragment extends IMBaseFragment<HomePresenter> implements HomeC
     }
 
     public void setChooseData(String url) {
+        showLoading();
+        imageView1.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                hideLoading();
+            }
+        },2000);
         IMImageLoadUtil.CommonImageRoundLoad(getActivity(),url,imageView1);
     }
     public void setChooseFileData(String url) {
